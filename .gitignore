@@ -1,3 +1,4 @@
+# === Spring Boot / Java ===
 HELP.md
 .gradle
 build/
@@ -5,7 +6,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### STS ###
+# STS
 .apt_generated
 .classpath
 .factorypath
@@ -17,7 +18,7 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
-### IntelliJ IDEA ###
+# IntelliJ
 .idea
 *.iws
 *.iml
@@ -26,12 +27,54 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
+# === VS Code ===
 .vscode/
+
+# === Node / Frontend ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Logs
+logs
+*.log
+
+# Runtime
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage
+*.lcov
+.nyc_output
+
+# Cache / builds
+.cache
+.parcel-cache
+.next
+.nuxt
+dist
+out
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Misc
+*.tgz
+.npm
+.eslintcache
+.stylelintcache
+.node_repl_history
