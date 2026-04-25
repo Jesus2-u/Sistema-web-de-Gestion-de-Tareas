@@ -2,7 +2,7 @@ package Grupo3.gestion_tareas.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 @Entity
-@Table(name = "asignacion")
+@Table(name = "Asignacion")
 public class Asignacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
