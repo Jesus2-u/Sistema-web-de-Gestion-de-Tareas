@@ -1,6 +1,5 @@
-package Grupo3.gestion_tareas;
 public class Conflicto {
     public String mensaje() {
-        return "Primer mensaje desde DEVELOP";
+        return " 2 conflicto Primer desde DEVELOP GITHUB";
     }
 }
