@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "Tarea")
+@Table(name = "tareas")
 public class Tarea {
 
     @Id
@@ -17,24 +17,20 @@ public class Tarea {
     private String descripcion;
 
     @Column(nullable = false)
-    private String estado;
+    private String estado = "PENDIENTE";
 
-    private String prioridad;
+    private String prioridad = "MEDIA";
 
+    @Column(name = "fecha_inicio")
     private LocalDate fechaInicio;
+
+    @Column(name = "fecha_limite")
     private LocalDate fechaLimite;
 
     @Column(name = "proyecto_id")
     private Long proyectoId;
 
     public Tarea() {}
-
-    public Tarea(String titulo, String estado) {
-        this.titulo = titulo;
-        this.estado = estado;
-    }
-
-    // GETTERS Y SETTERS
 
     public Long getId() { return id; }
 

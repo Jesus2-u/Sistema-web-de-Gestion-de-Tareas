@@ -1,20 +1,10 @@
 package Grupo3.gestion_tareas.controller;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import Grupo3.gestion_tareas.model.Proyecto;
 import Grupo3.gestion_tareas.repository.ProyectoRepository;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/proyectos")
@@ -27,38 +17,44 @@ public class ProyectoController {
         this.proyectoRepository = proyectoRepository;
     }
 
-    // GET → listar
+    // LISTAR
     @GetMapping
-    public List<Proyecto> listar(){
+    public List<Proyecto> listar() {
         return proyectoRepository.findAll();
     }
 
-    // POST → crear
+    // OBTENER POR ID
+    @GetMapping("/{id}")
+    public Proyecto obtener(@PathVariable Long id) {
+        return proyectoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+    }
+
+    // CREAR
     @PostMapping
-    public Proyecto crear(@RequestBody Proyecto proyecto){
+    public Proyecto crear(@RequestBody Proyecto proyecto) {
         return proyectoRepository.save(proyecto);
     }
 
-    // PUT → actualizar
+    // ACTUALIZAR
     @PutMapping("/{id}")
-    public Proyecto actualizar (@PathVariable Long id, @RequestBody Proyecto nuevoProyecto) {
-        Proyecto proyecto = proyectoRepository.findById(id).orElse(null);
-        
-        if (proyecto == null) {
-            throw new RuntimeException("Proyecto no encontrado con id: " + id);
-        }
+    public Proyecto actualizar(@PathVariable Long id, @RequestBody Proyecto data) {
 
-        proyecto.setNombre(nuevoProyecto.getNombre());
-        proyecto.setDescripcion(nuevoProyecto.getDescripcion());
-        proyecto.setFechaInicio(nuevoProyecto.getFechaInicio());
-        proyecto.setFechaFin(nuevoProyecto.getFechaFin());
+        Proyecto p = proyectoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 
-        return proyectoRepository.save(nuevoProyecto);
+        p.setNombre(data.getNombre());
+        p.setDescripcion(data.getDescripcion());
+        p.setFechaInicio(data.getFechaInicio());
+        p.setFechaFin(data.getFechaFin());
+        p.setEstado(data.getEstado());
+
+        return proyectoRepository.save(p);
     }
 
-    // DELETE → eliminar
+    // ELIMINAR
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id){
+    public void eliminar(@PathVariable Long id) {
         proyectoRepository.deleteById(id);
     }
 }
