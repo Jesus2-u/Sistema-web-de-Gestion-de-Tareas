@@ -3,8 +3,9 @@ import Grupo3.gestion_tareas.model.Asignacion;
 import Grupo3.gestion_tareas.repository.AsignacionRepository;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
 @RestController
-@RequestMapping("/asignar")
+@RequestMapping("/asignacion")
 @CrossOrigin
 public class AsignacionController {
     private final AsignacionRepository asignacionRepository;
