@@ -2,13 +2,12 @@ package Grupo3.gestion_tareas.controller;
 
 import Grupo3.gestion_tareas.model.Tarea;
 import Grupo3.gestion_tareas.repository.TareaRepository;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/tareas")
+@RequestMapping("/api/tareas")
 @CrossOrigin
 public class TareaController {
 
@@ -18,38 +17,44 @@ public class TareaController {
         this.tareaRepository = tareaRepository;
     }
 
-    // GET → listar
+    // LISTAR
     @GetMapping
     public List<Tarea> listar() {
         return tareaRepository.findAll();
     }
 
-    // POST → crear
+    // OBTENER POR ID
+    @GetMapping("/{id}")
+    public Tarea obtener(@PathVariable Long id) {
+        return tareaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+    }
+
+    // CREAR
     @PostMapping
     public Tarea crear(@RequestBody Tarea tarea) {
         return tareaRepository.save(tarea);
     }
 
-    // PUT → actualizar
+    // ACTUALIZAR
     @PutMapping("/{id}")
-public Tarea actualizar(@PathVariable Long id, @RequestBody Tarea nuevaTarea) {
+    public Tarea actualizar(@PathVariable Long id, @RequestBody Tarea data) {
 
-    Tarea tarea = tareaRepository.findById(id).orElse(null);
+        Tarea t = tareaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
 
-    if (tarea == null) {
-        throw new RuntimeException("Tarea no encontrada");
+        t.setTitulo(data.getTitulo());
+        t.setDescripcion(data.getDescripcion());
+        t.setEstado(data.getEstado());
+        t.setPrioridad(data.getPrioridad());
+        t.setFechaInicio(data.getFechaInicio());
+        t.setFechaLimite(data.getFechaLimite());
+        t.setProyectoId(data.getProyectoId());
+
+        return tareaRepository.save(t);
     }
 
-    tarea.setTitulo(nuevaTarea.getTitulo());
-    tarea.setDescripcion(nuevaTarea.getDescripcion());
-    tarea.setEstado(nuevaTarea.getEstado());
-    tarea.setPrioridad(nuevaTarea.getPrioridad());
-    tarea.setFechaInicio(nuevaTarea.getFechaInicio());
-    tarea.setFechaLimite(nuevaTarea.getFechaLimite());
-
-    return tareaRepository.save(tarea);
-}
-    // DELETE
+    // ELIMINAR
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Long id) {
         tareaRepository.deleteById(id);
